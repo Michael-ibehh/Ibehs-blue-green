@@ -34,11 +34,17 @@ Client
 ## Project Structure
 sf_blue-green/
 ├── docker-compose.yml
+
 ├── .env
+
 ├── verify.sh
+
 ├── nginx/
+
 │   ├── nginx.conf.template
+
 │   └── entrypoint.sh
+
 └── README.md
 
 
@@ -99,23 +105,33 @@ curl -X POST http://<ec2-ip>:8081/chaos/stop
 sleep 5
 curl -v http://<ec2-ip>:8080/version
 
-**EndpointsURL**               |    **Purpose**
-http://<ip>:8080/version       |   Public API (via Nginx)
-http://<ip>:8081/version       |   Blue service
-http://<ip>:8082/version       |   Green service
-POST /chaos/start?mode=error   |   Fail Blue
-POST /chaos/stop               |   Recover Blue
+**EndpointsURL & Purpose**
+
+http://<ip>:8080/version-     Public API (via Nginx)
+
+http://<ip>:8081/version-     Blue service
+
+http://<ip>:8082/version-     Green service
+
+POST /chaos/start?mode=error- Fail Blue
+
+POST /chaos/stop-             Recover Blue
 
 **Health ChecksNginx:**
 - curl http://localhost/healthz → OK
 - App: curl http://localhost:3000/healthz → 200
 
 ###Troubleshooting
-**Issue**               | **Fix**
-Connection refused      | Check security group, docker compose ps
-Unhealthy status        | Verify /healthz on port 3000
-verify.sh hangs         | Run bash -x ./verify.sh
-Permission denied       | chmod 400 key.pem, add to docker group
+
+**Issue & Fix**
+
+Connection refused-   Check security group, docker compose ps
+
+Unhealthy status-     Verify /healthz on port 3000
+
+verify.sh hangs-      Run bash -x ./verify.sh
+
+Permission denied-    chmod 400 key.pem, add to docker group
 
 **Cleanup**
 - docker compose down
