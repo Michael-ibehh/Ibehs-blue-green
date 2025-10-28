@@ -1,0 +1,44 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "${PORT:-8080}:80"
+    volumes:
+      - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template
+      - ./nginx/entrypoint.sh:/docker-entrypoint.d/entrypoint.sh
+    environment:
+      - ACTIVE_POOL=${ACTIVE_POOL}
+    depends_on:
+      - app_blue
+      - app_green
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
+
+  app_blue:
+    image: ${BLUE_IMAGE}
+    ports:
+      - "8081:3000"
+    environment:
+      - APP_POOL=blue
+      - RELEASE_ID=${RELEASE_ID_BLUE}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/healthz || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
+
+  app_green:
+    image: ${GREEN_IMAGE}
+    ports:
+      - "8082:3000"
+    environment:
+      - APP_POOL=green
+      - RELEASE_ID=${RELEASE_ID_GREEN}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/healthz || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 3

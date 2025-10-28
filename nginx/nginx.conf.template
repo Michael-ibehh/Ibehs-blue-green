@@ -1,0 +1,47 @@
+events {
+    worker_connections 1024; # Default number of connections per worker
+}
+
+http {
+    # Define upstreams for blue and green
+    upstream blue_pool {
+        server app_blue:3000 max_fails=2 fail_timeout=5s;
+    }
+
+    upstream green_pool {
+        server app_green:3000 max_fails=2 fail_timeout=5s;
+    }
+
+    server {
+        listen 80;
+
+        # Proxy settings to preserve headers
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass_header X-App-Pool;
+        proxy_pass_header X-Release-Id;
+
+        # Proxy timeouts for quick failover
+        proxy_connect_timeout 2s;
+        proxy_read_timeout 2s;
+        proxy_send_timeout 2s;
+
+        # Retry logic for 5xx and timeouts
+        proxy_next_upstream error timeout http_500 http_502 http_503 http_504;
+        proxy_next_upstream_timeout 2s;
+        proxy_next_upstream_tries 2;
+
+        # Route to active pool (blue or green)
+        location / {
+            set $active_pool ${ACTIVE_POOL};
+            proxy_pass http://${active_pool}_pool;
+        }
+
+        # Healthcheck endpoint for Nginx itself
+        location /healthz {
+            return 200 'OK';
+            add_header Content-Type text/plain;
+        }
+    }
+}
