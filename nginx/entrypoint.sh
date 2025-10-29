@@ -1,6 +1,11 @@
-#!/bin/bash
-# Render Nginx config from template
-envsubst '${ACTIVE_POOL}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+#!/bin/sh
 
-# Start Nginx
-exec nginx -g 'daemon off;'
+# Set default values if not provided
+export PORT=${PORT:-3000}
+export ACTIVE_POOL=${ACTIVE_POOL:-blue}
+
+# Substitute environment variables in nginx template
+envsubst '${ACTIVE_POOL} ${PORT}' < /etc/nginx/templates/nginx.conf.template > /etc/nginx/nginx.conf
+
+# Start nginx in foreground
+exec nginx -g "daemon off;"
