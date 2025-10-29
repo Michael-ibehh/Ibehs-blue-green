@@ -37,14 +37,14 @@ sf_blue-green/
 
 ├── .env
 
-├── verify.sh
-
 ├── nginx/
 
 │   ├── nginx.conf.template
 
-│   └── entrypoint.sh
+│   └── x.sh
 
+│    └── Dockerfile
+    
 └── README.md
 
 
@@ -65,7 +65,7 @@ sf_blue-green/
 - **AMI**: Ubuntu (prefered- by author) 
 - **Security Group**:
   - Allow **SSH (22)** from your IP
-  - Allow **TCP 8080, 8081, 8082** from `0.0.0.0/0`
+  - Allow **TCP- 8080, 8081, 8082** from `0.0.0.0/0`
 
 ### 2. Install Docker
 - curl -fsSL https://get.docker.com | sh
@@ -81,12 +81,6 @@ sf_blue-green/
 
 ## ⚠ Configuration
 - Follow my .env.example, and configure .env 
-
-### Run Automated Test
--  chmod +x verify.sh
--  ./verify.sh
-
-**OR**
 
 ### Manual Testing
 - 1. Check Blue (active)
