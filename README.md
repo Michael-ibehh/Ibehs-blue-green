@@ -1,3 +1,6 @@
+[![Deployed on AWS EC2](https://img.shields.io/badge/Deployed-AWS%20EC2-brightgreen?style=flat&logo=amazon-aws)](https://github.com/Michael-ibehh/Ibehs-blue-green-deployment)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)](https://github.com/Michael-ibehh/Ibehs-blue-green-deployment)
+[![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat&logo=nginx&logoColor=white)](https://github.com/Michael-ibehh/Ibehs-blue-green-deployment)
 # Blue-Green Deployment with Nginx & Docker
 
 A **zero-downtime**, **self-healing** Blue-Green deployment system using **Nginx** as a smart reverse proxy and **Docker Compose** to orchestrate two application environments (`blue` and `green`). Traffic is automatically routed to the healthy instance with **no client failures**.
