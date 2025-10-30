@@ -46,9 +46,14 @@ sf_blue-green/
 │   ├── nginx.conf.template
 
 │   └── x.sh
+<<<<<<< HEAD
     
     └── Dockerfile
+=======
+>>>>>>> 33774b68051e0854cf79fb8736b2775855e55821
 
+│    └── Dockerfile
+    
 └── README.md
 
 
@@ -69,7 +74,7 @@ sf_blue-green/
 - **AMI**: Ubuntu (prefered- by author) 
 - **Security Group**:
   - Allow **SSH (22)** from your IP
-  - Allow **TCP 8080, 8081, 8082** from `0.0.0.0/0`
+  - Allow **TCP- 8080, 8081, 8082** from `0.0.0.0/0`
 
 ### 2. Install Docker
 - curl -fsSL https://get.docker.com | sh
