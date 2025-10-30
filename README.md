@@ -20,10 +20,14 @@ A **zero-downtime**, **self-healing** Blue-Green deployment system using **Nginx
 ---
 
 ## Architecture
+
 Client
+
    ↓ (port 8080)
 [Nginx Reverse Proxy]
+
    ├──► app_blue:3000  (Active by default)
+
    └──► app_green:3000 (Standby / Failover)
 
 
@@ -46,13 +50,8 @@ sf_blue-green/
 │   ├── nginx.conf.template
 
 │   └── x.sh
-<<<<<<< HEAD
     
-    └── Dockerfile
-=======
->>>>>>> 33774b68051e0854cf79fb8736b2775855e55821
-
-│    └── Dockerfile
+│   └── Dockerfile
     
 └── README.md
 
