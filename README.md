@@ -1,3 +1,6 @@
+[![Deployed on AWS EC2](https://img.shields.io/badge/Deployed-AWS%20EC2-brightgreen?style=flat&logo=amazon-aws)](https://github.com/Michael-ibehh/Ibehs-blue-green-deployment)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)](https://github.com/Michael-ibehh/Ibehs-blue-green-deployment)
+[![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat&logo=nginx&logoColor=white)](https://github.com/Michael-ibehh/Ibehs-blue-green-deployment)
 # Blue-Green Deployment with Nginx & Docker
 
 A **zero-downtime**, **self-healing** Blue-Green deployment system using **Nginx** as a smart reverse proxy and **Docker Compose** to orchestrate two application environments (`blue` and `green`). Traffic is automatically routed to the healthy instance with **no client failures**.
@@ -11,7 +14,6 @@ A **zero-downtime**, **self-healing** Blue-Green deployment system using **Nginx
 - **Automatic recovery** back to Blue after fix
 - **Header forwarding**: `X-App-Pool`, `X-Release-Id`
 - **Chaos injection** via `/chaos` endpoint
-- **Automated verification** with `verify.sh`
 - **Fully containerized** using Docker Compose
 - **Deployed on AWS EC2**
 
@@ -32,18 +34,20 @@ Client
 ---
 
 ## Project Structure
+
 sf_blue-green/
+
 ├── docker-compose.yml
 
 ├── .env
-
-├── verify.sh
 
 ├── nginx/
 
 │   ├── nginx.conf.template
 
-│   └── entrypoint.sh
+│   └── x.sh
+    
+    └── Dockerfile
 
 └── README.md
 
@@ -81,12 +85,6 @@ sf_blue-green/
 
 ## ⚠ Configuration
 - Follow my .env.example, and configure .env 
-
-### Run Automated Test
--  chmod +x verify.sh
--  ./verify.sh
-
-**OR**
 
 ### Manual Testing
 - 1. Check Blue (active)
@@ -128,8 +126,6 @@ POST /chaos/stop-             Recover Blue
 Connection refused-   Check security group, docker compose ps
 
 Unhealthy status-     Verify /healthz on port 3000
-
-verify.sh hangs-      Run bash -x ./verify.sh
 
 Permission denied-    chmod 400 key.pem, add to docker group
 
